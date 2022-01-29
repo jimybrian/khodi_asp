@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KhodiAsp", "KhodiAsp\KhodiAsp.csproj", "{2AD3BB2D-16B3-4F81-9DF5-1BD7BD9DA15C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KhodiAsp.Tests", "KhodiAsp.Tests\KhodiAsp.Tests.csproj", "{A04D57B5-C859-4F1A-B683-12BB32FA6B12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AD3BB2D-16B3-4F81-9DF5-1BD7BD9DA15C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD3BB2D-16B3-4F81-9DF5-1BD7BD9DA15C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD3BB2D-16B3-4F81-9DF5-1BD7BD9DA15C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD3BB2D-16B3-4F81-9DF5-1BD7BD9DA15C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A04D57B5-C859-4F1A-B683-12BB32FA6B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A04D57B5-C859-4F1A-B683-12BB32FA6B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A04D57B5-C859-4F1A-B683-12BB32FA6B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A04D57B5-C859-4F1A-B683-12BB32FA6B12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9440D07-A02C-447E-A4D0-98D2FE5A9026}
+	EndGlobalSection
+EndGlobal
