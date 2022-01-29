@@ -16,5 +16,9 @@ namespace KhodiAsp
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
+
+
+        //Adding models
+        //public DbSet<ModelName> modelName { get; set; }
     }
 }
