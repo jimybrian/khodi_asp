@@ -175,6 +175,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="khodi_ef.cs" />
+    <Compile Include="Models\Assets.cs" />
+    <Compile Include="Models\LandlordProperties.cs" />
+    <Compile Include="Models\Landlords.cs" />
+    <Compile Include="Models\Properties.cs" />
+    <Compile Include="Models\PropertyAssets.cs" />
+    <Compile Include="Models\RolePermissions.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Tenants.cs" />
+    <Compile Include="Models\TenantUnits.cs" />
+    <Compile Include="Models\Units.cs" />
+    <Compile Include="Models\UserRoles.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,7 +242,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
