@@ -12,5 +12,6 @@ namespace KhodiAsp.Models
         public Guid tenantId { get; set; }
         public Guid userId { get; set; }
 
+        public Users user { get; set; }
     }
 }

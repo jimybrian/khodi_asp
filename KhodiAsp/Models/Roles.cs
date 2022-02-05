@@ -9,9 +9,9 @@ namespace KhodiAsp.Models
     public class Roles
     {
         [Key]
-        public Guid id { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
+        public Guid roleId { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
         public string name { get; set; }
 
     }

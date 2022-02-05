@@ -6,12 +6,11 @@ using System.Web;
 
 namespace KhodiAsp.Models
 {
-    public class Landlords
+    public class Permissions
     {
         [Key]
-        public Guid landordId { get; set; }
-        public Guid userId { get; set; }
+        public Guid permissionId { get; set; }
+        public string name { get; set; }
 
-        public Users user { get; set; }
     }
 }

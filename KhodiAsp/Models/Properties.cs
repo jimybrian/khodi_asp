@@ -9,7 +9,7 @@ namespace KhodiAsp.Models
     public class Properties
     {
         [Key]
-        public Guid id { get; set; }
+        public Guid propertyId { get; set; }
         public string amenities { get; set; }
         public string county { get; set; }
         public string houseRules { get; set; }

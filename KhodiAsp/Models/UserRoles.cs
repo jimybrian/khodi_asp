@@ -9,8 +9,10 @@ namespace KhodiAsp.Models
     public class UserRoles
     {
         [Key]
-        public Guid userId { get; set; }
+        public Guid userId { get; set; }      
         public Guid roleId { get; set; }
 
+        public Users user { get; set; }
+        public Roles role { get; set; }
     }
 }
