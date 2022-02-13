@@ -8,12 +8,15 @@ namespace KhodiAsp.Models
 {
     public class Assets
     {
-        [Key]
+        [Key]       
         public Guid assetId { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
         public string propertyId { get; set; }
         public string publicId { get; set; }
+        [Required]
+        public string assetName { get; set; }
+        [Required]
         public string secureUrl { get; set; }
     }
 }

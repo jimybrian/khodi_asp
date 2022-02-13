@@ -1,4 +1,5 @@
-﻿using KhodiAsp.Models;
+﻿using KhodiAsp.Data;
+using KhodiAsp.Models;
 using KhodiAsp.Security;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace KhodiAsp.Repositories
 
     interface iUserRepository
     {
-        Task<Users> createUser(Users user);
-
-        Task<bool> forgotPassword(string email);
-
-        Task<string> loginUser(string username, string password);
+        Task<Response<Users>> createUser(Users user);
+        Task<Response<bool>> forgotPassword(string email);
+        Response<Guid?> loginUser(LoginItems login);
+        Task<Response<bool>> verifyUser(string email, Guid userId);
+       
     }
 
     public class UserRepository : iUserRepository
@@ -28,8 +29,9 @@ namespace KhodiAsp.Repositories
             db.Configuration.LazyLoadingEnabled = false;
         }
 
-        public async Task<Users> createUser(Users user)
+        async public Task<Response<Users>> createUser(Users user)
         {
+            var response = new Response<Users>();
             try
             {
                 var passWord = PasswordHasher.createHash(user.password);
@@ -37,30 +39,134 @@ namespace KhodiAsp.Repositories
                 user.createdAt = DateTime.UtcNow;
                 user.updatedAt = DateTime.UtcNow;
                 user.enabled = false;
+                user.accountLocked = false;
                 user.accountExpired = false;
-                user.credentialsExpired = false;
+                user.credentialsExpired = false;              
                 user.userId = Guid.NewGuid();
 
                 db.users.Add(user);
                 await db.SaveChangesAsync();
 
                 user.password = "-------";
-                return user;
+                response.responseMessage = ResponseMessages.SUCCESS;
+                response.response = user;
+                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = null;
+                return response;
+            }
+
+            return response;
+        }
+
+        async public Task<Response<bool>> forgotPassword(string email)
+        {
+            var response = new Response<bool>();
+            try
+            {
+                var user = db.users.Where(u => u.email == email).FirstOrDefault();
+
+                if(user != null)
+                {
+                    user.password = null;
+                    user.enabled = false;
+                    user.accountLocked = false;
+                    user.updatedAt = DateTime.UtcNow;
+
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    response.responseMessage = ResponseMessages.SUCCESS;
+                    response.response = true;
+                }
+                else
+                {
+                    response.responseMessage = ResponseMessages.ERROR;
+                    response.response = false;
+                }
+
             }catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return null;
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = false;
             }
+
+            return response;
         }
 
-        public Task<bool> forgotPassword(string email)
+        public Response<Guid?> loginUser(LoginItems loginItems)
         {
-            throw new NotImplementedException();
+            var response = new Response<Guid?>();
+
+            var user = db.users.Where(u => u.email == loginItems.email).FirstOrDefault();
+
+            if(user != null)
+            {
+                var userPassword = user.password;
+                if (!user.enabled && user.accountLocked)
+                {
+                    response.responseMessage = ResponseMessages.VERIFY_USER;
+                    response.response = null;
+                }
+                else if (PasswordHasher.validatePassword(loginItems.password, userPassword))
+                {
+                    response.responseMessage = ResponseMessages.SUCCESS;
+                    response.response = user.userId;
+                }
+                else
+                {
+                    response.responseMessage = ResponseMessages.ERROR;
+                    response.response = null;
+                }               
+            }
+            else
+            {
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = null;
+            }
+
+            return response;
         }
 
-        public Task<string> loginUser(string username, string password)
+        async public Task<Response<bool>> verifyUser(string email, Guid userId)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+            try
+            {
+                var user = db.users.Where(u => u.email == email && u.userId == userId).FirstOrDefault();
+
+                if (user != null)
+                {
+                    user.enabled = true;
+                    user.accountLocked = false;
+                    user.updatedAt = DateTime.UtcNow;
+
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    response.responseMessage = ResponseMessages.SUCCESS;
+                    response.response = true;
+                }
+                else
+                {
+                    response.responseMessage = ResponseMessages.ERROR;
+                    response.response = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = false;
+            }
+
+            return response;
         }
     }
 }

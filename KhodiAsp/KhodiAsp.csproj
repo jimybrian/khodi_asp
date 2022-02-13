@@ -185,6 +185,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Data\LoginItems.cs" />
+    <Compile Include="Data\Response.cs" />
+    <Compile Include="Data\ResponseMessages.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
     <Compile Include="Migrations\202202051233414_DbCreate.cs" />
     <Compile Include="Migrations\202202051233414_DbCreate.designer.cs">
       <DependentUpon>202202051233414_DbCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202130811558_addedValidations.cs" />
+    <Compile Include="Migrations\202202130811558_addedValidations.designer.cs">
+      <DependentUpon>202202130811558_addedValidations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assets.cs" />
@@ -306,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202051233414_DbCreate.resx">
       <DependentUpon>202202051233414_DbCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202130811558_addedValidations.resx">
+      <DependentUpon>202202130811558_addedValidations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

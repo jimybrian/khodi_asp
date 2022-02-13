@@ -1,4 +1,5 @@
-﻿using KhodiAsp.Models;
+﻿using KhodiAsp.Data;
+using KhodiAsp.Models;
 using KhodiAsp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,42 @@ namespace KhodiAsp.Controllers
 
         [HttpPost]
         [Route("api/users/register")]
-        [ResponseType(typeof(Users))]
+        [ResponseType(typeof(Response<Users>))]
         public async Task<IHttpActionResult> registerUser(Users user)
         {
             var data = await userRepo.createUser(user);
 
-            return data != null ? 
-                (IHttpActionResult)Ok(data) : BadRequest();
+            return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("api/users/login")]
+        [ResponseType(typeof(Response<string>))]
+        public IHttpActionResult loginUser(LoginItems loginItems)
+        {
+            var data = userRepo.loginUser(loginItems);
+
+            return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("api/users/forgotPassword")]
+        [ResponseType(typeof(Response<bool>))]
+        public async Task<IHttpActionResult> forgotPassword(string email)
+        {
+            var data = await userRepo.forgotPassword(email);
+
+            return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("api/users/verfiyUser")]
+        [ResponseType(typeof(Response<bool>))]
+        public async Task<IHttpActionResult> verifyUser(string email, Guid userId)
+        {
+            var data = await userRepo.verifyUser(email, userId);
+
+            return Ok(data);
         }
     }
 }

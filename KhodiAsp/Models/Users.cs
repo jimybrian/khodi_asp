@@ -16,12 +16,18 @@ namespace KhodiAsp.Models
         public bool accountExpired { get; set; }
         public bool accountLocked { get; set; }
         public bool credentialsExpired { get; set; }
+        [Required]       
         public string email { get; set; }
         public bool enabled { get; set; }
+        [Required]
         public string firstName { get; set; }
+        [Required]
         public string lastName { get; set; }
+        [Required]
         public string password { get; set; }
+        [Required]
         public string phoneNumber { get; set; }
+        [Required]
         public string surname { get; set; }
 
     }
