@@ -37,6 +37,16 @@ namespace KhodiAsp.Controllers
         }
 
         [HttpPost]
+        [Route("api/users/authenticate")]
+        [ResponseType(typeof(Response<UserItems>))]
+        public async Task<IHttpActionResult> authenticateUser(LoginItems login)
+        {
+            var data = await userRepo.authenticateUser(login);
+
+            return Ok(data);
+        }
+
+        [HttpPost]
         [Route("api/users/forgotPassword")]
         [ResponseType(typeof(Response<bool>))]
         public async Task<IHttpActionResult> forgotPassword(string email)
@@ -52,6 +62,16 @@ namespace KhodiAsp.Controllers
         public async Task<IHttpActionResult> verifyUser(string email, Guid userId)
         {
             var data = await userRepo.verifyUser(email, userId);
+
+            return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("api/users/unlockAccount")]
+        [ResponseType(typeof(Response<bool>))]
+        public async Task<IHttpActionResult> unlockAccount(LoginItems login)
+        {
+            var data = await userRepo.unlockAccount(login);
 
             return Ok(data);
         }

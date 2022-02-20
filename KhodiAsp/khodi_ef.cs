@@ -35,6 +35,7 @@ namespace KhodiAsp
         public DbSet<Units> units { get; set; }
         public DbSet<UserRoles> userRoles { get; set; }
         public DbSet<Users> users { get; set; }
+        public DbSet<Tokens> tokens { get; set; }
 
     }
 }

@@ -16,13 +16,15 @@ namespace KhodiAsp.Repositories
         Task<Response<Users>> createUser(Users user);
         Task<Response<bool>> forgotPassword(string email);
         Response<Guid?> loginUser(LoginItems login);
+        Task<Response<UserItems>> authenticateUser(LoginItems login);
         Task<Response<bool>> verifyUser(string email, Guid userId);
-       
+        Task<Response<bool>> unlockAccount(LoginItems login);   
     }
 
     public class UserRepository : iUserRepository
     {
-        khodi_ef db = new khodi_ef();       
+        khodi_ef db = new khodi_ef();
+        TokenRepository tokenRepo = new TokenRepository();
 
         public UserRepository()
         {
@@ -108,9 +110,14 @@ namespace KhodiAsp.Repositories
             if(user != null)
             {
                 var userPassword = user.password;
-                if (!user.enabled && user.accountLocked)
+                if (!user.enabled)
                 {
                     response.responseMessage = ResponseMessages.VERIFY_USER;
+                    response.response = null;
+                }
+                else if (user.accountLocked)
+                {
+                    response.responseMessage = ResponseMessages.ERROR_ACCOUNT_LOCKED;
                     response.response = null;
                 }
                 else if (PasswordHasher.validatePassword(loginItems.password, userPassword))
@@ -120,7 +127,7 @@ namespace KhodiAsp.Repositories
                 }
                 else
                 {
-                    response.responseMessage = ResponseMessages.ERROR;
+                    response.responseMessage = ResponseMessages.ERROR_INVALID_CREDENTIALS;
                     response.response = null;
                 }               
             }
@@ -167,6 +174,108 @@ namespace KhodiAsp.Repositories
             }
 
             return response;
+        }
+
+        async public Task<Response<bool>> unlockAccount(LoginItems login)
+        {
+            var response = new Response<bool>();
+
+            try
+            {
+                var user = db.users.Where(u => u.email == login.email).FirstOrDefault();
+
+                if (user != null)
+                {
+                    var userPassword = user.password;
+                    if (!user.enabled)
+                    {
+                        response.responseMessage = ResponseMessages.VERIFY_USER;
+                        response.response = false;
+                    }
+                    else if (PasswordHasher.validatePassword(login.password, userPassword))
+                    {
+                        user.accountLocked = false;
+                        db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                        await db.SaveChangesAsync();
+                        response.responseMessage = ResponseMessages.SUCCESS;
+                        response.response = true;
+                    }
+                    else
+                    {
+                        response.responseMessage = ResponseMessages.ERROR_INVALID_CREDENTIALS;
+                        response.response = false;
+                    }
+                }
+                else
+                {
+                    response.responseMessage = ResponseMessages.ERROR;
+                    response.response = false;
+                }
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = false;
+            }
+
+            return response;
+        }
+
+        async public Task<Response<UserItems>> authenticateUser(LoginItems loginItems)
+        {
+            var response = new Response<UserItems>();
+
+            var user = db.users.Where(u => u.email == loginItems.email).FirstOrDefault();
+            try
+            {
+                if (user != null)
+                {
+                    var userPassword = user.password;
+                    if (!user.enabled)
+                    {
+                        response.responseMessage = ResponseMessages.VERIFY_USER;
+                        response.response = null;
+                    }
+                    else if (user.accountLocked)
+                    {
+                        response.responseMessage = ResponseMessages.ERROR_ACCOUNT_LOCKED;
+                        response.response = null;
+                    }
+                    else if (PasswordHasher.validatePassword(loginItems.password, userPassword))
+                    {
+                        response.responseMessage = ResponseMessages.SUCCESS;
+                        var token = await tokenRepo.createToken(user.userId);
+                        var userItems = new UserItems()
+                        {
+                            email = user.email,
+                            firstName = user.firstName,
+                            lastName = user.lastName,
+                            phoneNumber = user.phoneNumber,
+                            surname = user.surname,
+                            tokenGen = UtilMethods.Base64Encode(token.tokenId.ToString()),
+                            userId = user.userId
+                    };
+                        response.response = userItems;
+                    }
+                    else
+                    {
+                        response.responseMessage = ResponseMessages.ERROR_INVALID_CREDENTIALS;
+                        response.response = null;
+                    }
+                }
+                else
+                {
+                    response.responseMessage = ResponseMessages.ERROR;
+                    response.response = null;
+                }
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = null;
+            }
+
+            return response;            
         }
     }
 }
