@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace KhodiAsp.Models
         [Key]
         public Guid userId { get; set; }      
         public Guid roleId { get; set; }
-
+        [JsonIgnore]
         public Users user { get; set; }
+        [JsonIgnore]
         public Roles role { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace KhodiAsp.Models
         [Key]
         public Guid propertyId { get; set; }
         public Guid assetId { get; set; }
-
+        [JsonIgnore]
         public Assets assets { get; set; }
-        public Properties properties { get; set; }  
+        [JsonIgnore]
+        public Properties properties { get; set; }    
     }
 }

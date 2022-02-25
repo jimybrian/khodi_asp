@@ -13,6 +13,7 @@ namespace KhodiAsp.Repositories
     {
         Task<Response<Landlords>> createLandlord(Guid userId);
         Response<Landlords> getLandlordInfo(Guid userId);
+        Task<Response<bool>> deleteLandlord(Guid landlordId);
     }
 
     public class LandlordRepository : iLandlordRepository
@@ -41,6 +42,36 @@ namespace KhodiAsp.Repositories
                 Debug.WriteLine(ex.Message);
                 response.responseMessage = ResponseMessages.ERROR;
                 response.response = null;
+            }
+
+            return response;
+        }
+
+        public async Task<Response<bool>> deleteLandlord(Guid landlordId)
+        {
+            var response = new Response<bool>();
+            try
+            {
+                var landlord = db.landlords.Where(t => t.landordId == landlordId).FirstOrDefault();
+                if (landlord != null)
+                {
+                    db.landlords.Remove(landlord);
+                    await db.SaveChangesAsync();
+                    response.response = true;
+                    response.responseMessage = ResponseMessages.SUCCESS;
+                }
+                else
+                {
+                    response.response = false;
+                    response.responseMessage = ResponseMessages.ERROR;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.response = false;
+                response.responseMessage = ResponseMessages.ERROR;
             }
 
             return response;

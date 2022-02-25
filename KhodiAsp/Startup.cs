@@ -22,7 +22,7 @@ namespace KhodiAsp
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = false,
-                TokenEndpointPath = new PathString("/token"),
+                TokenEndpointPath = new PathString("/getAuthToken"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
                 Provider = authProvider
             };

@@ -25,5 +25,7 @@ namespace KhodiAsp.Models
         public string propertyName { get; set; }
         public string propertyType { get; set; }
         public string town { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
     }
 }
