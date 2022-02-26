@@ -75,5 +75,15 @@ namespace KhodiAsp.Controllers
 
             return Ok(data);
         }
+
+        [Authorize]
+        [HttpPatch]
+        [Route("api/users/updateUser")]
+        [ResponseType(typeof(Response<Users>))]
+        public async Task<IHttpActionResult> updateUser(Users user)
+        {
+            var data = await userRepo.updateUser(user);
+            return Ok(data);
+        }
     }
 }

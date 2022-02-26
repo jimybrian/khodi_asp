@@ -29,6 +29,7 @@ namespace KhodiAsp.Models
         public string phoneNumber { get; set; }
         [Required]
         public string surname { get; set; }
+        public string profilePicture { get; set; }
 
     }
 }

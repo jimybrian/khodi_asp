@@ -18,7 +18,9 @@ namespace KhodiAsp.Repositories
         Response<Guid?> loginUser(LoginItems login);
         Task<Response<UserItems>> authenticateUser(LoginItems login);
         Task<Response<bool>> verifyUser(string email, Guid userId);
-        Task<Response<bool>> unlockAccount(LoginItems login);   
+        Task<Response<bool>> unlockAccount(LoginItems login);
+        Task<Response<Users>> updateUser(Users user);
+       
     }
 
     public class UserRepository : iUserRepository
@@ -253,6 +255,7 @@ namespace KhodiAsp.Repositories
                             phoneNumber = user.phoneNumber,
                             surname = user.surname,
                             tokenGen = UtilMethods.Base64Encode(token.tokenId.ToString()),
+                            profilePic =user.profilePicture,
                             userId = user.userId
                     };
                         response.response = userItems;
@@ -276,6 +279,37 @@ namespace KhodiAsp.Repositories
             }
 
             return response;            
+        }
+
+        public async Task<Response<Users>> updateUser(Users user)
+        {
+            var response = new Response<Users>();
+            try
+            {
+                var cUser = db.users.Where(u => u.userId == user.userId).FirstOrDefault(); ;
+
+                cUser.firstName = user.firstName;
+                cUser.lastName = user.lastName;
+                cUser.phoneNumber = user.phoneNumber;
+                cUser.surname = user.surname;
+               
+                cUser.updatedAt = DateTime.UtcNow;
+
+                db.Entry(cUser).State = System.Data.Entity.EntityState.Modified;
+
+                await db.SaveChangesAsync();
+
+                response.responseMessage = ResponseMessages.SUCCESS;
+                response.response = cUser;
+
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = null;
+            }
+
+            return response;
         }
     }
 }

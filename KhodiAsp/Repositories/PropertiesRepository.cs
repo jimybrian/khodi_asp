@@ -14,7 +14,7 @@ namespace KhodiAsp.Repositories
     {
         Task<Response<Properties>> createProperty(Guid landlordId, Properties property);
         Task<Response<Properties>> updateProperty(Properties property);
-        List<Properties> getLandlordProperties(Guid landlordId);
+        Response<List<Properties>> getLandlordProperties(Guid landlordId);
         Task<Response<bool>> deleteProperty(Guid propertyId);
 
     }
@@ -29,8 +29,23 @@ namespace KhodiAsp.Repositories
             try 
             {
                 property.propertyId = Guid.NewGuid();
+                property.createdAt = DateTime.UtcNow;
+                property.updatedAt = DateTime.UtcNow;
                 
+                db.properties.Add(property);
 
+                var landlordProperties = new LandlordProperties()
+                {
+                    propertyId = property.propertyId,
+                    landlordId = landlordId
+                };
+
+                db.landlordProperties.Add(landlordProperties);
+
+                await db.SaveChangesAsync();
+
+                response.responseMessage = ResponseMessages.SUCCESS;
+                response.response = property;
             }
             catch(Exception ex)
             {
@@ -42,19 +57,72 @@ namespace KhodiAsp.Repositories
             return response;
         }
 
-        public Task<Response<bool>> deleteProperty(Guid propertyId)
+        async public Task<Response<bool>> deleteProperty(Guid propertyId)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+            try
+            {
+                var property = db.properties.Where(p => p.propertyId == propertyId).FirstOrDefault();
+                var landLordProperty = db.landlordProperties.Where(p => p.propertyId == propertyId).FirstOrDefault();
+
+                db.properties.Remove(property);
+                db.landlordProperties.Remove(landLordProperty);
+
+                await db.SaveChangesAsync();
+
+                response.responseMessage = ResponseMessages.SUCCESS;
+                response.response = true;
+
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = false;
+            }
+            return response;
         }
 
-        public List<Properties> getLandlordProperties(Guid landlordId)
+        public Response<List<Properties>> getLandlordProperties(Guid landlordId)
         {
-            throw new NotImplementedException();
+            var response = new Response<List<Properties>>();
+
+            var properties = from p in db.properties
+                             join l in db.landlordProperties on p.propertyId equals l.propertyId
+                             where l.landlordId == landlordId
+                             select new { p };
+
+            var propertiesList = new List<Properties>();
+
+            foreach(var p in properties)
+                propertiesList.Add(p.p);
+            
+
+
+            response.responseMessage = ResponseMessages.SUCCESS;
+            response.response = propertiesList;
+
+            return response;
         }
 
-        public Task<Response<Properties>> updateProperty(Properties property)
+        public async Task<Response<Properties>> updateProperty(Properties property)
         {
-            throw new NotImplementedException();
+            var response = new Response<Properties>();
+            try
+            {
+                property.updatedAt = DateTime.UtcNow;
+                db.Entry(property).State = System.Data.Entity.EntityState.Modified;
+
+                await db.SaveChangesAsync();
+
+                response.responseMessage = ResponseMessages.SUCCESS;
+                response.response = property;
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                response.responseMessage = ResponseMessages.ERROR;
+                response.response = null;
+            }
+            return response;
         }
     }
 }

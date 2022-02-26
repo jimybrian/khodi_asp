@@ -20,5 +20,6 @@ namespace KhodiAsp.Data
         public string phoneNumber { get; set; }       
         public string surname { get; set; }
         public string email { get; set; }       
+        public string profilePic { get; set; }
     }
 }

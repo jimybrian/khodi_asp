@@ -25,7 +25,7 @@ namespace KhodiAsp
         public DbSet<LandlordProperties> landlordProperties { get; set; }
         public DbSet<Landlords> landlords { get; set; }
         public DbSet<Permissions> permission { get; set; }
-        public DbSet<Properties> propertoes { get; set; }
+        public DbSet<Properties> properties { get; set; }
         public DbSet<PropertyAssets> propertyAssets { get; set; }
         public DbSet<PropertyUnits> propertyUnits { get; set; }
         public DbSet<RolePermissions> rolePermissions { get; set; }
