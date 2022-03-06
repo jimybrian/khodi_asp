@@ -13,6 +13,8 @@ namespace KhodiAsp.Models
         public float maxRent { get; set; }
         public float minRent { get; set; }
         public string unitNnumber { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; } 
 
     }
 }

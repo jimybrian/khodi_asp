@@ -191,6 +191,7 @@
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
+    <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\LoginItems.cs" />
@@ -225,6 +226,10 @@
     <Compile Include="Migrations\202202261643388_update-add-profile-picture.designer.cs">
       <DependentUpon>202202261643388_update-add-profile-picture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203051746353_update-units-table.cs" />
+    <Compile Include="Migrations\202203051746353_update-units-table.designer.cs">
+      <DependentUpon>202203051746353_update-units-table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assets.cs" />
     <Compile Include="Models\LandlordProperties.cs" />
@@ -247,6 +252,7 @@
     <Compile Include="Repositories\PropertiesRepository.cs" />
     <Compile Include="Repositories\TenantRepository.cs" />
     <Compile Include="Repositories\TokenRepository.cs" />
+    <Compile Include="Repositories\UnitRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Security\PasswordHasher.cs" />
     <Compile Include="Security\TokenAuthenticatorProvider.cs" />
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202261643388_update-add-profile-picture.resx">
       <DependentUpon>202202261643388_update-add-profile-picture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203051746353_update-units-table.resx">
+      <DependentUpon>202203051746353_update-units-table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
