@@ -11,6 +11,11 @@ namespace KhodiAsp.Data
         public string password { get; set; }    
     }
 
+    public class ForgotPasswordItems : LoginItems
+    {
+        public string newPassword { get; set; }
+    }
+
     public class UserItems
     {
         public Guid userId { get; set; }

@@ -9,15 +9,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UnitsController : ApiController
     {
 
         readonly UnitRepository uRepo = new UnitRepository();
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("api/units/addUnit")]
         [ResponseType(typeof(Response<Units>))]
@@ -27,7 +29,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPatch]
         [Route("api/units/updateUnit")]
         [ResponseType(typeof(Response<Units>))]
@@ -37,7 +39,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("api/units/getPropertyUnits")]
         [ResponseType(typeof(Response<List<Units>>))]
@@ -48,7 +50,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("api/units/deleteUnit")]
         [ResponseType(typeof(Response<bool>))]

@@ -9,15 +9,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LandlordController : ApiController
     {
 
         readonly LandlordRepository landlordRepo = new LandlordRepository();
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("api/landlords/createLandlord")]
         [ResponseType(typeof(Response<Landlords>))]
@@ -27,7 +29,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("api/landlords/getLandlord")]
         [ResponseType(typeof(Response<Landlords>))]
@@ -37,7 +39,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("api/landlord/deleteLandlord")]
         public async Task<IHttpActionResult> deleteLandlord(Guid landlordId)

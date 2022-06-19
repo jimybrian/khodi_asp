@@ -8,9 +8,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TokenController : ApiController
     {
         readonly TokenRepository tRepo = new TokenRepository();

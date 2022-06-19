@@ -9,15 +9,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PropertiesController : ApiController
     {
 
         readonly PropertiesRepository propRepo = new PropertiesRepository();
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("api/properties/createProperty")]
         [ResponseType(typeof(Response<Properties>))]
@@ -27,7 +29,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("api/properties/getLandlordProperties")]
         [ResponseType(typeof(Response<List<Properties>>))]
@@ -37,7 +39,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPatch]
         [Route("api/properties/updateProperty")]
         [ResponseType(typeof(Response<Properties>))]
@@ -47,7 +49,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("api/properties/deleteProperty")]
         [ResponseType(typeof(Response<bool>))]

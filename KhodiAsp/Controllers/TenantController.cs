@@ -9,15 +9,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TenantController : ApiController
     {
 
         readonly TenantRepository tenantRepo = new TenantRepository();
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("api/tenants/createTenant")]
         [ResponseType(typeof(Response<Tenants>))]
@@ -27,7 +29,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("api/tenants/getTenant")]
         [ResponseType(typeof(Response<Tenants>))]
@@ -37,7 +39,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("api/tenants/deleteTenant")]
         public async Task<IHttpActionResult> deleteTenant(Guid tenantId)

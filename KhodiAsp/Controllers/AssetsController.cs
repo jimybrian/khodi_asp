@@ -9,15 +9,18 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+
     public class AssetsController : ApiController
     {
         readonly AssetsRepository aRepo = new AssetsRepository();
 
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("api/propertyAssets/addPropertyAsset")]
         [ResponseType(typeof(Response<Assets>))]
@@ -28,7 +31,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPatch]
         [Route("api/propertyAssets/updatePropertyAssets")]
         [ResponseType(typeof(Response<Assets>))]
@@ -39,7 +42,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("api/properyAssets/getPropertyAssets")]
         [ResponseType(typeof(Response<List<Assets>>))]

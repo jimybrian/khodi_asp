@@ -9,12 +9,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
+using KhodiAsp.Emails;
+using System.Net.Http.Headers;
 
 namespace KhodiAsp.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserController : ApiController
     {
         private readonly UserRepository userRepo = new UserRepository();
+        private readonly EmailHandler emailHander = new EmailHandler();
 
         [HttpPost]
         [Route("api/users/register")]
@@ -56,19 +61,23 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/users/verfiyUser")]
         [ResponseType(typeof(Response<bool>))]
-        public async Task<IHttpActionResult> verifyUser(string email, Guid userId)
+        public async Task<HttpResponseMessage> verifyUser(string email, Guid userId)
         {
             var data = await userRepo.verifyUser(email, userId);
 
-            return Ok(data);
+            var response = new HttpResponseMessage();
+            response.Content = new StringContent(data.response);
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+
+            return response;
         }
 
         [HttpPost]
         [Route("api/users/unlockAccount")]
-        [ResponseType(typeof(Response<bool>))]
+        [ResponseType(typeof(string))]
         public async Task<IHttpActionResult> unlockAccount(LoginItems login)
         {
             var data = await userRepo.unlockAccount(login);
@@ -76,7 +85,7 @@ namespace KhodiAsp.Controllers
             return Ok(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPatch]
         [Route("api/users/updateUser")]
         [ResponseType(typeof(Response<Users>))]
@@ -85,5 +94,35 @@ namespace KhodiAsp.Controllers
             var data = await userRepo.updateUser(user);
             return Ok(data);
         }
+
+        [HttpPost]
+        [Route("api/users/changePassword")]
+        [ResponseType(typeof(Response<bool>))]
+        public async Task<IHttpActionResult> changePassword(ForgotPasswordItems creds)
+        {
+            var data = await userRepo.changePassword(creds);
+
+            return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("api/users/deleteEmails")]
+        [ResponseType(typeof(Response<bool>))]
+        public async Task<IHttpActionResult> deleteEmails(LoginItems logins)
+        {
+            var data = await userRepo.deleteEmails(logins);
+
+            return Ok(data);
+        }
+
+        //[HttpPost]
+        //[Route("api/users/sendEmail")]
+        //public IHttpActionResult sendTestEmail()
+        //{
+        //    var email = emailHander.createVerificationEmail("Brian Kiwaa", "briankiwaa@gmail.com", Guid.NewGuid());
+        //    emailHander.sendEmail("briankiwaa@gmail.com", email, "Verify Account");
+
+        //    return Ok();
+        //}
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace KhodiAsp
 {
@@ -9,7 +11,7 @@ namespace KhodiAsp
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Web API configuration and services                  
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -19,6 +21,11 @@ namespace KhodiAsp
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var corsAttr = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(corsAttr);
+
+            Debug.WriteLine("Web Config Class Startup");
         }
     }
 }

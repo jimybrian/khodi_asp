@@ -16,7 +16,7 @@ namespace KhodiAsp
         public void Configuration(IAppBuilder app)
         {
             Debug.WriteLine("Startup Class Starting");
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
+            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888         
 
             var authProvider = new TokenAuthenticatorProvider();
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
