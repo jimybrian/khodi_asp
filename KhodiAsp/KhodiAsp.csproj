@@ -324,6 +324,10 @@
     <Compile Include="Migrations\202203051746353_update-units-table.designer.cs">
       <DependentUpon>202203051746353_update-units-table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207041823138_update_units.cs" />
+    <Compile Include="Migrations\202207041823138_update_units.designer.cs">
+      <DependentUpon>202207041823138_update_units.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assets.cs" />
     <Compile Include="Models\LandlordProperties.cs" />
@@ -462,6 +466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203051746353_update-units-table.resx">
       <DependentUpon>202203051746353_update-units-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207041823138_update_units.resx">
+      <DependentUpon>202207041823138_update_units.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
