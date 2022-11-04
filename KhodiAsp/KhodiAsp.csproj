@@ -328,6 +328,10 @@
     <Compile Include="Migrations\202207041823138_update_units.designer.cs">
       <DependentUpon>202207041823138_update_units.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209221850190_units_add_amenities_inventory.cs" />
+    <Compile Include="Migrations\202209221850190_units_add_amenities_inventory.designer.cs">
+      <DependentUpon>202209221850190_units_add_amenities_inventory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assets.cs" />
     <Compile Include="Models\LandlordProperties.cs" />
@@ -469,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207041823138_update_units.resx">
       <DependentUpon>202207041823138_update_units.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209221850190_units_add_amenities_inventory.resx">
+      <DependentUpon>202209221850190_units_add_amenities_inventory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

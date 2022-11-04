@@ -18,6 +18,8 @@ namespace KhodiAsp.Models
         public string blockNumber { get; set; }
         public int numOfBedrooms { get; set; }
         public string unitNnumber { get; set; }
+        public string amenities { get; set; }
+        public string inventory { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; } 
 

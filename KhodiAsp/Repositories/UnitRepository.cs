@@ -85,7 +85,7 @@ namespace KhodiAsp.Repositories
 
             var units = (from u in db.units
                          join p in db.propertyUnits on u.unitId equals p.unitId
-                         where p.unitId == u.unitId
+                         where p.propertyId == propertyId
                          select new { u });
 
             var lsUnits = new List<Units>();
